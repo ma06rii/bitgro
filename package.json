@@ -10,6 +10,7 @@
     "test:unit": "vitest"
   },
   "dependencies": {
+    "@clerk/react": "^6.7.1",
     "@iconify/react": "^5.2.0",
     "framer-motion": "^11.11.17",
     "react": "^18.3.1",
