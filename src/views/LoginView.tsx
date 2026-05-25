@@ -1,44 +1,97 @@
 // -----------------------------------------------------------------------------
-// LoginView — direct port of `views/LoginView.vue`.
+// LoginView — Clerk-backed sign-in, with the existing card design preserved.
 //
-// React explainer:
-//   - Vue's `v-model="email"` becomes a controlled input: we read the value
-//     from state and write to it via `onChange`.
-//   - Vue's `useRouter()` + `router.push(...)` becomes React Router's
-//     `useNavigate()` + `navigate(...)`.
-//   - The Zustand selector pattern keeps the component reactive to changes in
-//     the parts of the store it actually reads.
+// Auth strategy:
+//   - useSignIn from `@clerk/react/legacy` exposes the stable v5-style SignIn
+//     resource: signIn.create({ strategy: 'password', ... }) for email/password
+//     and signIn.authenticateWithRedirect({ strategy: 'oauth_*', ... }) for SSO.
+//   - On a complete sign-in we call setActive to install the session, then
+//     call useAuthStore.login(...) so the rest of the app's Zustand-based user
+//     state remains populated (other views read from there).
 // -----------------------------------------------------------------------------
 
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Icon } from '@iconify/react'
+import { useSignIn } from '@clerk/react/legacy'
+import { isClerkAPIResponseError } from '@clerk/react/errors'
 
 import { useAuthStore } from '@/stores/auth'
 import AuthHeroBackground from '@/components/AuthHeroBackground'
 import '@/assets/auth.css'
 
+type OAuthStrategy = 'oauth_google' | 'oauth_apple' | 'oauth_microsoft'
+
+const OAUTH_PROVIDERS: ReadonlyArray<{ strategy: OAuthStrategy; label: string; icon: string }> = [
+  { strategy: 'oauth_google', label: 'Continue with Google', icon: 'logos:google-icon' },
+  { strategy: 'oauth_apple', label: 'Continue with Apple', icon: 'logos:apple' },
+  { strategy: 'oauth_microsoft', label: 'Continue with Microsoft', icon: 'logos:microsoft-icon' },
+]
+
 export default function LoginView() {
   const navigate = useNavigate()
-  // Pulling everything we need from the store in one call. Components re-render
-  // when any of these slices change.
-  const login = useAuthStore((s) => s.login)
-  const isLoading = useAuthStore((s) => s.isLoading)
-  const error = useAuthStore((s) => s.error)
+  const { isLoaded, signIn, setActive } = useSignIn()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [remember, setRemember] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
 
+  const [error, setError] = useState<string | null>(null)
+  const [submitting, setSubmitting] = useState(false)
+  const [pendingProvider, setPendingProvider] = useState<OAuthStrategy | null>(null)
+
+  const busy = submitting || pendingProvider !== null
+
+  function readClerkError(err: unknown): string {
+    if (isClerkAPIResponseError(err)) {
+      const first = err.errors?.[0]
+      return first?.longMessage || first?.message || 'Sign in failed. Please try again.'
+    }
+    return err instanceof Error ? err.message : 'Sign in failed. Please try again.'
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const ok = await login({ email, password })
-    if (ok) navigate('/')
+    if (!isLoaded || busy) return
+    setError(null)
+    setSubmitting(true)
+    try {
+      const result = await signIn.create({ strategy: 'password', identifier: email, password })
+      if (result.status === 'complete') {
+        await setActive({ session: result.createdSessionId })
+        await useAuthStore.getState().login({ email, password })
+        navigate('/')
+      } else {
+        setError('Additional verification is required to sign in to this account.')
+      }
+    } catch (err) {
+      setError(readClerkError(err))
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  async function handleOAuth(strategy: OAuthStrategy) {
+    if (!isLoaded || busy) return
+    setError(null)
+    setPendingProvider(strategy)
+    try {
+      await signIn.authenticateWithRedirect({
+        strategy,
+        redirectUrl: '/sso-callback',
+        redirectUrlComplete: '/',
+      })
+      // Browser navigates away on success; nothing to do here.
+    } catch (err) {
+      setError(readClerkError(err))
+      setPendingProvider(null)
+    }
   }
 
   return (
     <div className="auth-shell">
+      <style>{OAUTH_STYLES}</style>
       <aside className="auth-brand-panel">
         <AuthHeroBackground />
         <div className="auth-brand-header">
@@ -82,6 +135,31 @@ export default function LoginView() {
               Sign in to access your treasury dashboard.
             </p>
           </header>
+
+          <div className="auth-oauth-row">
+            {OAUTH_PROVIDERS.map((p) => (
+              <button
+                key={p.strategy}
+                type="button"
+                className="auth-oauth-button"
+                onClick={() => handleOAuth(p.strategy)}
+                disabled={!isLoaded || busy}
+              >
+                {pendingProvider === p.strategy ? (
+                  <span className="auth-spinner" aria-hidden="true" />
+                ) : (
+                  <Icon icon={p.icon} className="auth-oauth-icon" />
+                )}
+                <span>{p.label}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="auth-divider">
+            <span className="auth-divider-line" aria-hidden="true" />
+            <span className="auth-divider-label">or continue with email</span>
+            <span className="auth-divider-line" aria-hidden="true" />
+          </div>
 
           <form className="auth-form" onSubmit={handleSubmit} noValidate>
             <div className="auth-field">
@@ -153,13 +231,13 @@ export default function LoginView() {
             <button
               type="submit"
               className="auth-submit"
-              disabled={isLoading}
+              disabled={!isLoaded || busy}
             >
-              {isLoading && (
+              {submitting && (
                 <span className="auth-spinner" aria-hidden="true" />
               )}
-              <span>{isLoading ? 'Signing in…' : 'Sign in'}</span>
-              {!isLoading && (
+              <span>{submitting ? 'Signing in…' : 'Sign in'}</span>
+              {!submitting && (
                 <Icon icon="lucide:arrow-right" className="auth-submit-icon" />
               )}
             </button>
@@ -176,3 +254,68 @@ export default function LoginView() {
     </div>
   )
 }
+
+// Scoped styles for the OAuth row + divider. Defined inline (rather than in
+// auth.css) so all auth changes stay co-located with the two view files.
+// Every value resolves against existing CSS variables so the visuals stay in
+// lockstep with the rest of the design system.
+const OAUTH_STYLES = `
+.auth-oauth-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin-bottom: 1.25rem;
+}
+.auth-oauth-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  width: 100%;
+  font-family: var(--font-headings);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.8125rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background-color: white;
+  color: var(--color-foreground);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, transform 0.05s;
+}
+.auth-oauth-button:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+  background-color: color-mix(in srgb, var(--color-accent) 5%, white);
+}
+.auth-oauth-button:active { transform: translateY(1px); }
+.auth-oauth-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+.auth-oauth-icon {
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.auth-divider-line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border);
+}
+.auth-divider-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+`

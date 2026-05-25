@@ -31,4 +31,5 @@ export const routes: AppRoute[] = [
   { path: '/tier-activation', name: 'tier-activation', Component: lazy(() => import('@/views/Tier3ActivationView')) },
   { path: '/login', name: 'login', hideSidebar: true, Component: lazy(() => import('@/views/LoginView')) },
   { path: '/signup', name: 'signup', hideSidebar: true, Component: lazy(() => import('@/views/SignupView')) },
+  { path: '/sso-callback', name: 'sso-callback', hideSidebar: true, Component: lazy(() => import('@/views/SsoCallbackView')) },
 ]
