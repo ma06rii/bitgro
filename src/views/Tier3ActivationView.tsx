@@ -150,7 +150,7 @@ export default function Tier3ActivationView() {
                       </h4>
                       <p className="waiver-section-text">
                         <span>
-                          Lemongrass acts solely as a treasury management interface. We do not
+                          Bitgro acts solely as a treasury management interface. We do not
                           audit, endorse, or guarantee the security of third-party smart contracts
                           (e.g., Mezo, Starknet, Re7). You accept that hacks or exploits on these
                           external networks may result in irreversible loss.
@@ -185,11 +185,11 @@ export default function Tier3ActivationView() {
                     </div>
                     <div className="waiver-section">
                       <h4 className="waiver-section-title">
-                        <span>5. No Recourse against Lemongrass</span>
+                        <span>5. No Recourse against Bitgro</span>
                       </h4>
                       <p className="waiver-section-text">
                         <span>
-                          Under no circumstances shall Lemongrass, its officers, or its affiliates
+                          Under no circumstances shall Bitgro, its officers, or its affiliates
                           be held liable for any financial losses incurred through the use of Tier
                           3 strategies. This software is provided "as is" without warranty of any
                           kind.

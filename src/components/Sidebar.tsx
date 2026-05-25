@@ -41,10 +41,10 @@ export default function Sidebar() {
       <div>
         <div className="sidebar-header">
           <div className="logo-mark">
-            <span className="logo-initial">L</span>
+            <span className="logo-initial">B</span>
           </div>
           <span className="logo-label">
-            <span>LEMONGRASS</span>
+            <span>BITGRO</span>
           </span>
         </div>
         <nav className="sidebar-nav">

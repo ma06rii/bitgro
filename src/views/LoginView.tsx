@@ -43,9 +43,9 @@ export default function LoginView() {
         <AuthHeroBackground />
         <div className="auth-brand-header">
           <div className="logo-mark">
-            <span className="logo-initial">L</span>
+            <span className="logo-initial">B</span>
           </div>
-          <span className="logo-label">LEMONGRASS</span>
+          <span className="logo-label">BITGRO</span>
         </div>
         <div className="auth-brand-body">
           <span className="auth-brand-eyebrow">Institutional Treasury</span>

@@ -17,8 +17,8 @@ import App from './App'
 
 // Global stylesheets — match what the Vue project imported in its source.
 // `base.css` defines the design-token CSS variables; `main.css` builds on it.
-import './assets/base.css'
-import './assets/main.css'
+// import './assets/base.css'
+// import './assets/main.css'
 
 const container = document.getElementById('app')
 if (!container) {
