@@ -12,6 +12,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
+import { ClerkProvider } from '@clerk/react'
 
 import App from './App'
 
@@ -19,6 +20,11 @@ import App from './App'
 // `base.css` defines the design-token CSS variables; `main.css` builds on it.
 // import './assets/base.css'
 // import './assets/main.css'
+
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+if (!PUBLISHABLE_KEY) {
+  throw new Error('Missing VITE_CLERK_PUBLISHABLE_KEY in .env.local')
+}
 
 const container = document.getElementById('app')
 if (!container) {
@@ -28,7 +34,9 @@ if (!container) {
 createRoot(container).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/login">
+        <App />
+      </ClerkProvider>
     </BrowserRouter>
   </StrictMode>,
 )
