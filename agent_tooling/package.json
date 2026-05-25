@@ -1,0 +1,15 @@
+{
+  "name": "bitgro_react-agent-tooling",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Playwright E2E smoke suite for the migrated bitgro_react app. Self-contained: dependencies and artifacts live only here.",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "report": "playwright show-report ./playwright-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.10.0"
+  }
+}

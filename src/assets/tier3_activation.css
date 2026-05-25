@@ -1,0 +1,122 @@
+/* === CSS Custom Properties === */
+:root {
+  --color-background: #f7f8f5;
+  --color-foreground: #0c342c;
+  --color-border: #e9eae7;
+  --color-primary: #e3ef26;
+  --color-primary-foreground: #0c342c;
+  --color-secondary: #0c342c;
+  --color-secondary-foreground: #ffffff;
+  --color-accent: #133872;
+  --color-muted: #e9eae7;
+  --color-muted-foreground: #6f8178;
+  --color-card: #ffffff;
+  --color-card-foreground: #0c342c;
+  --color-surface-dark: #062f2a;
+  --color-success: #15803d;
+  --color-warning: #b45309;
+  --color-destructive: #b91c1c;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-headings: "Gotham Medium", "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* === Base Reset === */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+html { font-size: 16px; }
+body { font-family: var(--font-body); color: var(--color-foreground); background-color: var(--color-background); -webkit-font-smoothing: antialiased; line-height: 1.5; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input, select, textarea { font-family: inherit; }
+a { text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* === T3 Page === */
+.t3-page { min-height: 100vh; background-color: var(--color-background); color: var(--color-foreground); font-family: var(--font-body); display: flex; flex-direction: column; width: 100%; position: relative; }
+
+/* === T3 Header === */
+.t3-header { background-color: var(--color-secondary); color: var(--color-secondary-foreground); box-shadow: 0 1px 2px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 20; }
+.t3-header-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; border-bottom: 1px solid var(--color-surface-dark); }
+.t3-header-left { display: flex; align-items: center; gap: 1.5rem; }
+.t3-branding { display: flex; align-items: center; gap: 0.75rem; }
+.t3-logo-mark { width: 1.75rem; height: 1.75rem; background-color: var(--color-primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.t3-logo-initial { font-family: var(--font-headings); font-weight: 700; font-size: 1.125rem; color: var(--color-secondary); line-height: 1; }
+.t3-logo-label { font-family: var(--font-headings); font-weight: 700; font-size: 1.125rem; letter-spacing: 0.05em; color: white; }
+.t3-divider { height: 1.5rem; width: 1px; background-color: var(--color-surface-dark); margin: 0 0.5rem; }
+.t3-page-title { font-size: 1.25rem; font-family: var(--font-headings); font-weight: 500; color: white; }
+.t3-header-right { display: flex; align-items: center; gap: 1rem; }
+.btn-save-exit { display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-headings); font-weight: 600; text-transform: uppercase; font-size: 14px; padding: 0.375rem 0.75rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); color: white; background: transparent; cursor: pointer; transition: background-color 0.15s; }
+.btn-save-exit:hover { background-color: rgba(255,255,255,0.1); }
+
+/* === T3 Main === */
+.t3-main { flex: 1; width: 100%; max-width: 56rem; margin: 0 auto; padding: 2rem 2rem 3rem; }
+
+/* === T3 Intro === */
+.t3-intro { margin-bottom: 2.5rem; text-align: center; }
+.t3-title { font-size: 2rem; font-family: var(--font-headings); font-weight: 500; color: var(--color-foreground); margin-bottom: 0.75rem; }
+.t3-subtitle { font-size: 1.125rem; color: var(--color-muted-foreground); }
+
+/* === Wizard Track === */
+.wizard-track { position: relative; }
+.wizard-connector { position: absolute; left: 23px; top: 1.5rem; bottom: 4rem; width: 2px; background-color: var(--color-border); z-index: 0; }
+.wizard-steps { display: flex; flex-direction: column; gap: 2.5rem; }
+
+/* === Wizard Step === */
+.wizard-step { display: flex; gap: 1.5rem; position: relative; z-index: 1; }
+.wizard-step-pending { display: flex; gap: 1.5rem; position: relative; z-index: 1; opacity: 0.5; }
+
+/* === Step Icons === */
+.step-icon-done { width: 3rem; height: 3rem; border-radius: 9999px; background-color: var(--color-success); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 4px var(--color-background), 0 1px 2px rgba(0,0,0,0.05); flex-shrink: 0; }
+.step-check-icon { font-size: 1.5rem; }
+
+.step-icon-current { width: 3rem; height: 3rem; border-radius: 9999px; background-color: var(--color-primary); color: var(--color-secondary); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 4px var(--color-background), 0 4px 6px rgba(0,0,0,0.1); flex-shrink: 0; font-family: var(--font-headings); font-size: 1.25rem; font-weight: 700; }
+
+.step-icon-pending { width: 3rem; height: 3rem; border-radius: 9999px; background-color: white; color: var(--color-muted-foreground); border: 2px solid var(--color-border); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 4px var(--color-background); flex-shrink: 0; font-family: var(--font-headings); font-size: 1.25rem; font-weight: 700; }
+
+/* === Step Body === */
+.step-body { padding-top: 0.5rem; flex: 1; }
+.step-body-full { width: 100%; }
+.step-header-row { display: flex; justify-content: space-between; align-items: flex-start; }
+.step-title { font-size: 1.125rem; font-family: var(--font-headings); font-weight: 500; color: var(--color-foreground); margin-bottom: 0.25rem; }
+.step-title-lg { font-size: 1.25rem; font-family: var(--font-headings); font-weight: 500; color: var(--color-foreground); margin-bottom: 0.25rem; }
+.step-desc { font-size: 14px; color: var(--color-muted-foreground); }
+.btn-edit { font-size: 14px; font-weight: 500; color: var(--color-accent); background: none; border: none; cursor: pointer; flex-shrink: 0; margin-left: 1rem; }
+.btn-edit:hover { text-decoration: underline; }
+
+/* === Classification Grid === */
+.classification-grid { margin-top: 1rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.classification-item { background-color: white; border: 1px solid var(--color-border); padding: 0.75rem; border-radius: 12px; font-size: 14px; }
+.item-label { display: block; font-size: 10px; font-family: var(--font-headings); text-transform: uppercase; color: var(--color-muted-foreground); letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+.item-value { font-weight: 500; }
+
+/* === Board Doc Card === */
+.board-doc-card { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border: 1px solid var(--color-border); border-radius: 12px; background-color: white; width: 100%; max-width: 28rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); margin-top: 1rem; }
+.doc-left { display: flex; align-items: center; gap: 0.75rem; }
+.doc-icon { width: 2.5rem; height: 2.5rem; background-color: #fef2f2; color: #dc2626; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.doc-file-icon { font-size: 1.25rem; }
+.doc-info { }
+.doc-name { font-size: 14px; font-weight: 500; color: var(--color-foreground); }
+.doc-meta { font-size: 12px; color: var(--color-muted-foreground); margin-top: 0.125rem; }
+.doc-check { font-size: 1.25rem; color: var(--color-success); flex-shrink: 0; }
+
+/* === Waiver Box === */
+.waiver-box { border: 1px solid var(--color-border); border-radius: 12px; background-color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden; display: flex; flex-direction: column; height: 400px; margin-top: 1.5rem; }
+.waiver-scroll { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; font-size: 14px; color: color-mix(in srgb, var(--color-foreground) 80%, transparent); line-height: 1.6; background-color: white; }
+.waiver-section { }
+.waiver-section-title { font-family: var(--font-headings); font-weight: 700; color: var(--color-foreground); margin-bottom: 0.5rem; }
+.waiver-section-text { }
+.waiver-end { padding-top: 1.5rem; margin-top: 1.5rem; border-top: 1px solid var(--color-border); text-align: center; }
+.waiver-end-badge { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-success); background-color: #f0fdf4; padding: 0.5rem 1rem; border-radius: 9999px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.waiver-end-icon { font-size: 0.875rem; }
+
+/* === Waiver Footer === */
+.waiver-footer { background-color: color-mix(in srgb, var(--color-muted) 20%, transparent); border-top: 1px solid var(--color-border); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+@media (min-width: 640px) { .waiver-footer { flex-direction: row; align-items: center; } }
+
+.accept-label { display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer; }
+.accept-checkbox { width: 1.25rem; height: 1.25rem; border-radius: 4px; border: 1px solid var(--color-primary); background-color: var(--color-primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.125rem; }
+.accept-check-icon { font-size: 0.875rem; color: var(--color-secondary); }
+.accept-text { font-size: 14px; font-weight: 500; color: var(--color-foreground); max-width: 28rem; }
+
+.btn-accept { display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-headings); font-weight: 600; text-transform: uppercase; font-size: 1rem; padding: 0.75rem 1.25rem; border-radius: 12px; background-color: var(--color-primary); color: var(--color-primary-foreground); cursor: pointer; border: none; white-space: nowrap; flex-shrink: 0; transition: opacity 0.15s; }
+.btn-accept:hover { opacity: 0.9; }

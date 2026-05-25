@@ -1,0 +1,35 @@
+{
+  "name": "bitgro_react",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test:unit": "vitest"
+  },
+  "dependencies": {
+    "@iconify/react": "^5.2.0",
+    "framer-motion": "^11.11.17",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "zustand": "^5.0.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.1",
+    "@types/node": "^25.9.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.6.3",
+    "vite": "^7.1.12",
+    "vitest": "^2.1.5"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
+}

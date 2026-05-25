@@ -1,0 +1,200 @@
+/* Extracted from AuthHeroBackground.vue's <style scoped> block.
+   Class names use a unique `hero-bg-*` prefix so no scoping is needed. */
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  isolation: isolate;
+}
+
+/* ---- Video base layer ---- */
+.hero-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateZ(0) scale(1.04);
+  filter: saturate(1.05) contrast(1.02);
+  animation: hero-bg-video-drift 32s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* ---- Dark green overlay + edge vignette ---- */
+.hero-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 20% 12%, rgba(6, 47, 42, 0.45), transparent 55%),
+    radial-gradient(120% 90% at 85% 95%, rgba(6, 47, 42, 0.5), transparent 60%),
+    linear-gradient(180deg, rgba(12, 52, 44, 0.55) 0%, rgba(12, 52, 44, 0.66) 60%, rgba(12, 52, 44, 0.72) 100%);
+}
+
+/* ---- Soft light bloom wash (replaces old brand-color blobs) ---- */
+.hero-bg-wash {
+  position: absolute;
+  inset: 0;
+}
+.hero-bg-wash span {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  filter: blur(6px);
+  will-change: transform, opacity;
+}
+.hero-bg-wash-a {
+  top: -28%;
+  right: -22%;
+  width: 32rem;
+  height: 32rem;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.10), transparent 65%);
+  animation: hero-bg-wash-breathe 24s ease-in-out infinite alternate;
+}
+.hero-bg-wash-b {
+  bottom: -25%;
+  left: -22%;
+  width: 28rem;
+  height: 28rem;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.07), transparent 65%);
+  animation: hero-bg-wash-breathe 28s ease-in-out infinite alternate-reverse;
+  animation-delay: -6s;
+}
+
+/* ---- Diagonal light streaks ---- */
+.hero-bg-streaks {
+  position: absolute;
+  inset: 0;
+}
+.hero-bg-streak {
+  position: absolute;
+  display: block;
+  will-change: transform, opacity;
+  filter: blur(0.5px);
+}
+.hero-bg-streak--a {
+  top: 22%;
+  left: -40%;
+  width: 180%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.14) 50%, transparent 100%);
+  transform: rotate(18deg);
+  animation: hero-bg-streak-glide 13s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+.hero-bg-streak--b {
+  top: 58%;
+  left: -45%;
+  width: 190%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.18) 50%, transparent 100%);
+  transform: rotate(32deg);
+  animation: hero-bg-streak-glide 17s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -5s;
+}
+.hero-bg-streak--c {
+  top: 8%;
+  left: -30%;
+  width: 160%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.10) 50%, transparent 100%);
+  transform: rotate(65deg);
+  animation: hero-bg-streak-glide 21s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -11s;
+}
+
+/* ---- Particles (single layer, multiple dots via box-shadow) ---- */
+.hero-bg-particles {
+  position: absolute;
+  left: 50%;
+  bottom: -8%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow:
+    -18rem 2rem 0 -1px rgba(255, 255, 255, 0.55),
+    -10rem 6rem 0 -1.5px rgba(255, 255, 255, 0.35),
+     -2rem 1rem 0 0 rgba(255, 255, 255, 0.60),
+      4rem 4rem 0 -1px rgba(255, 255, 255, 0.45),
+     12rem 8rem 0 -1.5px rgba(255, 255, 255, 0.30),
+     -6rem 9rem 0 -1.5px rgba(255, 255, 255, 0.35),
+     18rem 3rem 0 -1px rgba(255, 255, 255, 0.40),
+    -22rem 7rem 0 -1.5px rgba(255, 255, 255, 0.28);
+  animation: hero-bg-particle-drift 16s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity;
+}
+
+/* ---- Growth pulses (concentric expanding rings) ---- */
+.hero-bg-pulses {
+  position: absolute;
+  inset: 0;
+}
+.hero-bg-pulse {
+  position: absolute;
+  width: 32rem;
+  height: 32rem;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.hero-bg-pulse circle {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 0.4;
+  vector-effect: non-scaling-stroke;
+}
+.hero-bg-pulse--a {
+  top: 18%;
+  left: -10%;
+  animation: hero-bg-pulse-rise 11s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+.hero-bg-pulse--b {
+  bottom: 8%;
+  right: -8%;
+  animation: hero-bg-pulse-rise 13s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation-delay: -5.5s;
+}
+
+/* ---- Reduced motion: freeze everything ---- */
+.hero-bg--reduced .hero-bg-video,
+.hero-bg--reduced .hero-bg-wash span,
+.hero-bg--reduced .hero-bg-streak,
+.hero-bg--reduced .hero-bg-particles,
+.hero-bg--reduced .hero-bg-pulse {
+  animation: none;
+}
+
+/* ---- Keyframes ---- */
+@keyframes hero-bg-video-drift {
+  from { transform: translate3d(0, 0, 0) scale(1.04); }
+  to   { transform: translate3d(-1.2%, -0.8%, 0) scale(1.08); }
+}
+
+@keyframes hero-bg-wash-breathe {
+  from { transform: scale(1)    translate3d(0, 0, 0); opacity: 0.85; }
+  to   { transform: scale(1.18) translate3d(2%, -1%, 0); opacity: 1; }
+}
+
+@keyframes hero-bg-streak-glide {
+  0%   { transform: translate3d(-12%, 0, 0) rotate(var(--r, 18deg)); opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translate3d(20%, 0, 0) rotate(var(--r, 18deg)); opacity: 0; }
+}
+.hero-bg-streak--a { --r: 18deg; }
+.hero-bg-streak--b { --r: 32deg; }
+.hero-bg-streak--c { --r: 65deg; }
+
+@keyframes hero-bg-particle-drift {
+  0%   { transform: translate3d(0, 0, 0); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translate3d(-2%, -120vh, 0); opacity: 0; }
+}
+
+@keyframes hero-bg-pulse-rise {
+  0%   { transform: scale(0.25); opacity: 0; }
+  20%  { opacity: 0.9; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
