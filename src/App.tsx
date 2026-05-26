@@ -19,12 +19,20 @@ import { Suspense } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useAuth } from '@clerk/react'
+import { WagmiProvider } from 'wagmi'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { mezoTestnet } from '@mezo-org/passport'
 
 import Sidebar from './components/Sidebar'
 import RouteProgressBar from './components/RouteProgressBar'
 import ProtectedRoute from './router/ProtectedRoute'
 import PublicRoute from './router/PublicRoute'
 import { openRoutes, protectedRoutes, publicRoutes, routes } from './router/routes'
+import { wagmiConfig } from './lib/wagmiConfig'
+import { queryClient } from './lib/queryClient'
+
+import '@rainbow-me/rainbowkit/styles.css'
 
 export default function App() {
   // `useLocation` is the React-Router equivalent of Vue Router's `useRoute()`.
@@ -42,53 +50,59 @@ export default function App() {
   const hideSidebar = currentRoute?.hideSidebar ?? false
 
   return (
-    <div className="app-shell">
-      {!hideSidebar && <Sidebar />}
-      <main className="main-panel">
-        <RouteProgressBar />
-        <AnimatePresence mode="wait" initial>
-          <motion.div
-            key={location.pathname}
-            className="view-shell"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-          >
-            {/*
-              <Suspense> is required because every route component is
-              `React.lazy(...)`. Vue Router handled this implicitly; in React
-              we have to provide the fallback boundary explicitly.
-            */}
-            <Suspense fallback={null}>
-              <Routes location={location}>
-                {/* Signed-out-only: bounces to "/" if already authenticated. */}
-                <Route element={<PublicRoute />}>
-                  {publicRoutes.map(({ path, Component }) => (
-                    <Route key={path} path={path} element={<Component />} />
-                  ))}
-                </Route>
+    <WagmiProvider config={wagmiConfig}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider initialChain={mezoTestnet}>
+          <div className="app-shell">
+            {!hideSidebar && <Sidebar />}
+            <main className="main-panel">
+              <RouteProgressBar />
+              <AnimatePresence mode="wait" initial>
+                <motion.div
+                  key={location.pathname}
+                  className="view-shell"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2, ease: 'easeOut' }}
+                >
+                  {/*
+                    <Suspense> is required because every route component is
+                    `React.lazy(...)`. Vue Router handled this implicitly; in
+                    React we have to provide the fallback boundary explicitly.
+                  */}
+                  <Suspense fallback={null}>
+                    <Routes location={location}>
+                      {/* Signed-out-only: bounces to "/" if already authenticated. */}
+                      <Route element={<PublicRoute />}>
+                        {publicRoutes.map(({ path, Component }) => (
+                          <Route key={path} path={path} element={<Component />} />
+                        ))}
+                      </Route>
 
-                {/* Authenticated-only: bounces to "/login" otherwise. */}
-                <Route element={<ProtectedRoute />}>
-                  {protectedRoutes.map(({ path, Component }) => (
-                    <Route key={path} path={path} element={<Component />} />
-                  ))}
-                </Route>
+                      {/* Authenticated-only: bounces to "/login" otherwise. */}
+                      <Route element={<ProtectedRoute />}>
+                        {protectedRoutes.map(({ path, Component }) => (
+                          <Route key={path} path={path} element={<Component />} />
+                        ))}
+                      </Route>
 
-                {/* OAuth hand-off — must be reachable in both auth states. */}
-                {openRoutes.map(({ path, Component }) => (
-                  <Route key={path} path={path} element={<Component />} />
-                ))}
+                      {/* OAuth hand-off — must be reachable in both auth states. */}
+                      {openRoutes.map(({ path, Component }) => (
+                        <Route key={path} path={path} element={<Component />} />
+                      ))}
 
-                {/* Unknown paths funnel through PublicRoute → "/login", or
-                    forward on to "/" automatically if already signed in. */}
-                <Route path="*" element={<Navigate to="/login" replace />} />
-              </Routes>
-            </Suspense>
-          </motion.div>
-        </AnimatePresence>
-      </main>
-    </div>
+                      {/* Unknown paths funnel through PublicRoute → "/login", or
+                          forward on to "/" automatically if already signed in. */}
+                      <Route path="*" element={<Navigate to="/login" replace />} />
+                    </Routes>
+                  </Suspense>
+                </motion.div>
+              </AnimatePresence>
+            </main>
+          </div>
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   )
 }

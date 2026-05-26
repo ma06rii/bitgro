@@ -2,6 +2,8 @@
 
 import { Icon } from '@iconify/react'
 
+import MezoPassportCard from '@/components/MezoPassportCard'
+
 import '@/assets/connect_wallet.css'
 
 export default function ConnectWalletView() {
@@ -170,30 +172,7 @@ export default function ConnectWalletView() {
                 </div>
               </div>
 
-              <div className="custodian-card">
-                <div className="custodian-card-pad">
-                  <div className="custodian-card-top">
-                    <div className="custodian-card-icon">
-                      <Icon icon="lucide:shield" className="custodian-icon" />
-                    </div>
-                    <div className="badge-tier2">
-                      <span>Tier 2: Self-Custody</span>
-                    </div>
-                  </div>
-                  <h3 className="custodian-name">
-                    <span>RainbowKit / Web3</span>
-                  </h3>
-                  <p className="custodian-desc">
-                    <span>Connect standard hardware or browser wallets.</span>
-                  </p>
-                  <div className="custodian-card-footer">
-                    <button className="btn-connect">
-                      <span>Connect</span>
-                      <Icon icon="lucide:arrow-right" className="btn-connect-icon" />
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <MezoPassportCard />
             </div>
           </div>
 
