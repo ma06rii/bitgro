@@ -33,3 +33,16 @@ export const routes: AppRoute[] = [
   { path: '/signup', name: 'signup', hideSidebar: true, Component: lazy(() => import('@/views/SignupView')) },
   { path: '/sso-callback', name: 'sso-callback', hideSidebar: true, Component: lazy(() => import('@/views/SsoCallbackView')) },
 ]
+
+// Route buckets consumed by App.tsx so each group can be wrapped in the
+// appropriate guard (see ProtectedRoute / PublicRoute). The flat `routes`
+// array above is kept as-is — App.tsx still uses it for the `hideSidebar`
+// lookup keyed on the current pathname.
+const PUBLIC_PATHS = new Set(['/login', '/signup'])
+const OPEN_PATHS = new Set(['/sso-callback'])
+
+export const publicRoutes = routes.filter((r) => PUBLIC_PATHS.has(r.path))
+export const openRoutes = routes.filter((r) => OPEN_PATHS.has(r.path))
+export const protectedRoutes = routes.filter(
+  (r) => !PUBLIC_PATHS.has(r.path) && !OPEN_PATHS.has(r.path),
+)

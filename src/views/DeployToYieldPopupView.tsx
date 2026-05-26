@@ -3,6 +3,7 @@
 
 import { Icon } from '@iconify/react'
 
+import '@/assets/modal.css'
 import '@/assets/deploy_to_yield_popup.css'
 
 export default function DeployToYieldPopupView() {

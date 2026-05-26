@@ -16,16 +16,25 @@
 // -----------------------------------------------------------------------------
 
 import { Suspense } from 'react'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useAuth } from '@clerk/react'
 
 import Sidebar from './components/Sidebar'
 import RouteProgressBar from './components/RouteProgressBar'
-import { routes } from './router/routes'
+import ProtectedRoute from './router/ProtectedRoute'
+import PublicRoute from './router/PublicRoute'
+import { openRoutes, protectedRoutes, publicRoutes, routes } from './router/routes'
 
 export default function App() {
   // `useLocation` is the React-Router equivalent of Vue Router's `useRoute()`.
   const location = useLocation()
+
+  // Block the entire shell render until Clerk has hydrated its session from
+  // storage. Without this gate, the sidebar would flash in its logged-out
+  // state for one frame before the guards resolve.
+  const { isLoaded: authIsLoaded } = useAuth()
+  if (!authIsLoaded) return null
 
   // The Vue source kept `hideSidebar` in route meta; we keep it on the same
   // route record (see `src/router/routes.tsx`). Lookup is O(routes), cheap.
@@ -53,9 +62,28 @@ export default function App() {
             */}
             <Suspense fallback={null}>
               <Routes location={location}>
-                {routes.map(({ path, Component }) => (
+                {/* Signed-out-only: bounces to "/" if already authenticated. */}
+                <Route element={<PublicRoute />}>
+                  {publicRoutes.map(({ path, Component }) => (
+                    <Route key={path} path={path} element={<Component />} />
+                  ))}
+                </Route>
+
+                {/* Authenticated-only: bounces to "/login" otherwise. */}
+                <Route element={<ProtectedRoute />}>
+                  {protectedRoutes.map(({ path, Component }) => (
+                    <Route key={path} path={path} element={<Component />} />
+                  ))}
+                </Route>
+
+                {/* OAuth hand-off — must be reachable in both auth states. */}
+                {openRoutes.map(({ path, Component }) => (
                   <Route key={path} path={path} element={<Component />} />
                 ))}
+
+                {/* Unknown paths funnel through PublicRoute → "/login", or
+                    forward on to "/" automatically if already signed in. */}
+                <Route path="*" element={<Navigate to="/login" replace />} />
               </Routes>
             </Suspense>
           </motion.div>

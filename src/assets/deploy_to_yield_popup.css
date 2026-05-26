@@ -139,45 +139,9 @@ table { border-collapse: collapse; width: 100%; }
 .positions-td-center { padding: 1rem; font-weight: 500; color: var(--color-foreground); text-align: center; }
 .badge-healthy { display: inline-flex; align-items: center; padding: 0.125rem 0.625rem; border-radius: 8px; font-size: 10px; font-family: var(--font-headings); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; background-color: #dcfce7; color: var(--color-success); }
 
-/* === Modal Overlay === */
-.modal-overlay {
-  position: absolute;
-  inset: 0;
-  background-color: color-mix(in srgb, var(--color-secondary) 90%, transparent);
-  backdrop-filter: blur(8px);
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  overflow-y: auto;
-}
-
-/* === Modal Dialog === */
-.modal-dialog {
-  background-color: var(--color-background);
-  border-radius: 20px;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-  width: 100%;
-  max-width: 48rem;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-}
-
-/* === Modal Header === */
-.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; border-bottom: 1px solid var(--color-border); background-color: white; position: sticky; top: 0; z-index: 10; }
-.modal-header-left { display: flex; align-items: center; gap: 0.75rem; }
-.modal-header-icon { width: 2rem; height: 2rem; background-color: var(--color-muted); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-.modal-header-icon-glyph { font-size: 1rem; }
-.modal-title { font-family: var(--font-headings); font-size: 1.25rem; font-weight: 500; }
-.modal-close { color: var(--color-muted-foreground); transition: color 0.15s; }
-.modal-close:hover { color: var(--color-foreground); }
-.modal-close-icon { font-size: 1.5rem; }
-
-/* === Modal Body === */
-.modal-body { padding: 2rem; background-color: var(--color-background); flex: 1; display: flex; flex-direction: column; gap: 2rem; }
+/* Modal overlay/dialog/header/body/footer + cancel/confirm buttons live in
+ * src/assets/modal.css. Only popup-specific rules remain in this file.
+ */
 
 /* === Wizard Steps === */
 .wizard-steps { display: flex; align-items: flex-start; justify-content: space-between; position: relative; }
@@ -222,13 +186,7 @@ table { border-collapse: collapse; width: 100%; }
 .tx-number { width: 1.5rem; height: 1.5rem; border-radius: 9999px; background-color: white; border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
 .tx-desc { font-size: 14px; padding-top: 0.125rem; }
 
-/* === Modal Footer === */
-.modal-footer { padding: 1rem 1.5rem; background-color: white; border-top: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; position: sticky; bottom: 0; z-index: 10; }
-.btn-cancel { display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-headings); font-weight: 600; text-transform: uppercase; font-size: 1rem; padding: 0.75rem 1.25rem; border-radius: 12px; border: none; background: transparent; color: var(--color-muted-foreground); cursor: pointer; transition: background-color 0.15s; }
-.btn-cancel:hover { background-color: color-mix(in srgb, var(--color-muted) 50%, transparent); }
-
-.btn-confirm { display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-headings); font-weight: 600; text-transform: uppercase; font-size: 1rem; padding: 0.75rem 2rem; border-radius: 12px; background-color: var(--color-primary); color: var(--color-primary-foreground); cursor: pointer; border: none; min-width: 15rem; position: relative; overflow: hidden; transition: opacity 0.15s; }
-.btn-confirm:hover { opacity: 0.9; }
-.confirm-inner { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-.confirm-lock-icon { font-size: 1rem; }
+/* Footer + cancel/confirm primitives moved to src/assets/modal.css.
+ * Only the popup-specific progress bar overlay remains here.
+ */
 .confirm-progress-bar { position: absolute; inset: 0; background-color: rgba(0,0,0,0.1); width: 80%; }

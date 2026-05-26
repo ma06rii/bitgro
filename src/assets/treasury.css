@@ -706,3 +706,245 @@ table { border-collapse: collapse; }
     transition: none;
   }
 }
+
+/* === Sidebar user — avatar fallback === */
+.user-avatar-fallback {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 2px solid var(--color-primary);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: color-mix(in srgb, var(--color-primary) 18%, var(--color-secondary));
+  color: var(--color-primary);
+  font-family: var(--font-headings);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+/* === Sidebar user — loading skeleton === */
+.user-skeleton {
+  display: inline-block;
+  height: 0.75rem;
+  border-radius: 4px;
+  background-color: color-mix(in srgb, white 12%, transparent);
+  vertical-align: middle;
+  animation: user-skeleton-pulse 1.4s ease-in-out infinite;
+}
+.user-skeleton-name { width: 7.5rem; height: 0.75rem; }
+.user-skeleton-role { width: 5rem;   height: 0.5rem; margin-top: 0.25rem; }
+
+@keyframes user-skeleton-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1;   }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* === Sidebar user — menu trigger (button reset for cog) === */
+.sidebar-user-menu-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-user-button {
+  background: transparent;
+  border: 0;
+  padding: 0.25rem;
+  margin: -0.25rem;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted-foreground);
+  transition: color 0.15s, background-color 0.15s;
+  cursor: pointer;
+}
+.sidebar-user-button:hover { color: white; }
+.sidebar-user-button:hover .settings-icon { color: white; }
+.sidebar-user-button[aria-expanded="true"] {
+  color: white;
+  background-color: color-mix(in srgb, white 8%, transparent);
+}
+.sidebar-user-button[aria-expanded="true"] .settings-icon { color: white; }
+.sidebar-user-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* === Sidebar user — popover menu === */
+.sidebar-user-menu {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 13rem;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.18), 0 4px 8px rgba(0, 0, 0, 0.08);
+  padding: 0.375rem;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  animation: sidebar-user-menu-in 0.12s ease-out;
+}
+
+@keyframes sidebar-user-menu-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+.sidebar-user-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-foreground);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.12s, color 0.12s;
+}
+.sidebar-user-menu-item:hover {
+  background-color: color-mix(in srgb, var(--color-muted) 60%, transparent);
+}
+.sidebar-user-menu-item:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
+.sidebar-user-menu-icon {
+  font-size: 1rem;
+  color: var(--color-muted-foreground);
+  flex-shrink: 0;
+}
+
+.sidebar-user-menu-hint {
+  margin-left: auto;
+  font-size: 10px;
+  font-family: var(--font-headings);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted-foreground);
+  background-color: color-mix(in srgb, var(--color-muted) 80%, transparent);
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+}
+
+.sidebar-user-menu-item[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.sidebar-user-menu-item[aria-disabled="true"]:hover {
+  background-color: transparent;
+}
+
+.sidebar-user-menu-item-danger {
+  color: var(--color-destructive);
+}
+.sidebar-user-menu-item-danger .sidebar-user-menu-icon {
+  color: var(--color-destructive);
+}
+.sidebar-user-menu-item-danger:hover {
+  background-color: color-mix(in srgb, var(--color-destructive) 10%, transparent);
+  color: var(--color-destructive);
+}
+
+/* === Logout confirmation modal === */
+.logout-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: color-mix(in srgb, var(--color-secondary) 80%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow-y: auto;
+  animation: logout-modal-fade-in 0.16s ease-out;
+}
+
+@keyframes logout-modal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.logout-modal-dialog {
+  max-width: 26rem;
+  animation: logout-modal-dialog-in 0.18s ease-out;
+}
+
+@keyframes logout-modal-dialog-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+.logout-modal-header-icon {
+  background-color: color-mix(in srgb, var(--color-destructive) 12%, transparent);
+  color: var(--color-destructive);
+}
+
+.logout-modal-body {
+  padding: 1.5rem;
+  gap: 1rem;
+}
+
+.logout-modal-copy {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--color-muted-foreground);
+}
+
+.logout-modal-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.75rem 0.875rem;
+  background-color: var(--color-red-50);
+  border: 1px solid color-mix(in srgb, var(--color-destructive) 25%, transparent);
+  border-radius: 12px;
+  font-size: 13px;
+  color: var(--color-destructive);
+}
+.logout-modal-error-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+/* .btn-confirm-danger, .btn-cancel:disabled, .modal-close:disabled, .spin
+ * (and its reduced-motion override) live in src/assets/modal.css.
+ */
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-user-menu,
+  .logout-modal-overlay,
+  .logout-modal-dialog,
+  .user-skeleton {
+    animation: none;
+  }
+}

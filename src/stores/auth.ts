@@ -78,5 +78,6 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
-  logout: () => set({ user: null, error: null }),
+  // Reset every field so a logout fired mid-login/signup leaves no stale flags.
+  logout: () => set({ user: null, error: null, isLoading: false }),
 }))

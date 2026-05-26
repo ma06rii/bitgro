@@ -56,3 +56,55 @@ test.describe('login view', () => {
     await expect(page.getByText('Open a treasury account')).toBeVisible()
   })
 })
+
+test.describe('logout flow', () => {
+  async function signIn(page: import('@playwright/test').Page) {
+    await page.goto('/login', { waitUntil: 'domcontentloaded' })
+    await page.locator('#login-email').fill('test@example.com')
+    await page.locator('#login-password').fill('hunter2')
+    await page.getByRole('button', { name: /sign in/i }).click()
+    await page.waitForURL('http://localhost:5173/', { timeout: 5_000 })
+    await expect(page.locator('aside.sidebar')).toBeVisible()
+  }
+
+  test('Cancel in the confirm dialog leaves the session intact', async ({ page }) => {
+    await signIn(page)
+
+    await page.getByRole('button', { name: 'Open account menu' }).click()
+    await page.getByRole('menuitem', { name: /log out/i }).click()
+
+    const dialog = page.getByRole('dialog', { name: 'Log out of Bitgro?' })
+    await expect(dialog).toBeVisible()
+
+    // Cancel is focused first on open (accessibility regression guard).
+    await expect(dialog.getByRole('button', { name: 'Cancel' })).toBeFocused()
+
+    // Escape dismisses the dialog without signing out.
+    await page.keyboard.press('Escape')
+    await expect(dialog).toBeHidden()
+    await expect(page).toHaveURL('http://localhost:5173/')
+    await expect(page.locator('aside.sidebar')).toBeVisible()
+  })
+
+  test('Confirming the dialog signs out, redirects to /login, and invalidates the session', async ({
+    page,
+  }) => {
+    await signIn(page)
+
+    await page.getByRole('button', { name: 'Open account menu' }).click()
+    await page.getByRole('menuitem', { name: /log out/i }).click()
+
+    const dialog = page.getByRole('dialog', { name: 'Log out of Bitgro?' })
+    await expect(dialog).toBeVisible()
+
+    await dialog.getByRole('button', { name: /^log out$/i }).click()
+
+    await page.waitForURL(/\/login$/, { timeout: 10_000 })
+    await expect(page.locator('aside.sidebar')).toHaveCount(0)
+
+    // Negative-path guard: a protected route bounces back to /login,
+    // proving the Clerk session is genuinely gone (not just the local store).
+    await page.goto('/yield', { waitUntil: 'domcontentloaded' })
+    await expect(page).toHaveURL(/\/login$/)
+  })
+})
