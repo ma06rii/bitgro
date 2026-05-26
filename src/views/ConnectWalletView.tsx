@@ -2,7 +2,88 @@
 
 import { Icon } from '@iconify/react'
 
+import { useMezoWallet } from '@/hooks/useMezoWallet'
 import '@/assets/connect_wallet.css'
+
+type Web3ButtonState = 'idle' | 'connecting' | 'connected' | 'error'
+
+function Web3ConnectButton() {
+  const { shortAddress, isConnected, isConnecting, error, openConnect, disconnect } =
+    useMezoWallet()
+
+  const state: Web3ButtonState = isConnecting
+    ? 'connecting'
+    : isConnected
+      ? 'connected'
+      : error
+        ? 'error'
+        : 'idle'
+
+  const handleClick = () => {
+    if (state === 'connecting') return
+    if (state === 'connected') {
+      disconnect()
+      return
+    }
+    openConnect()
+  }
+
+  const label =
+    state === 'connecting'
+      ? 'Connecting…'
+      : state === 'connected'
+        ? (shortAddress ?? 'Connected')
+        : state === 'error'
+          ? 'Try again'
+          : 'Connect'
+
+  const iconName =
+    state === 'connecting'
+      ? 'lucide:loader-2'
+      : state === 'connected'
+        ? 'lucide:check'
+        : state === 'error'
+          ? 'lucide:alert-circle'
+          : 'lucide:arrow-right'
+
+  const ariaLabel =
+    state === 'connecting'
+      ? 'Connecting wallet, please wait'
+      : state === 'connected'
+        ? `Connected as ${shortAddress ?? 'wallet'}, click to disconnect`
+        : state === 'error'
+          ? 'Wallet error, click to retry'
+          : 'Connect Web3 wallet'
+
+  const classes = ['btn-connect']
+  if (state === 'connecting') classes.push('is-connecting')
+  if (state === 'connected') classes.push('is-connected')
+
+  return (
+    <>
+      <button
+        type="button"
+        className={classes.join(' ')}
+        onClick={handleClick}
+        disabled={state === 'connecting'}
+        aria-busy={state === 'connecting'}
+        aria-label={ariaLabel}
+      >
+        <span>{label}</span>
+        <Icon
+          icon={iconName}
+          className={`btn-connect-icon${state === 'connecting' ? ' spin' : ''}`}
+          aria-hidden="true"
+        />
+      </button>
+      {error && state !== 'connecting' ? (
+        <p className="btn-connect-error" role="alert">
+          {error}
+        </p>
+      ) : null}
+    </>
+  )
+}
 
 export default function ConnectWalletView() {
   return (
@@ -187,10 +268,7 @@ export default function ConnectWalletView() {
                     <span>Connect standard hardware or browser wallets.</span>
                   </p>
                   <div className="custodian-card-footer">
-                    <button className="btn-connect">
-                      <span>Connect</span>
-                      <Icon icon="lucide:arrow-right" className="btn-connect-icon" />
-                    </button>
+                    <Web3ConnectButton />
                   </div>
                 </div>
               </div>

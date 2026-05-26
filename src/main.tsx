@@ -13,8 +13,15 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { ClerkProvider } from '@clerk/react'
+import { WagmiProvider } from 'wagmi'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 
 import App from './App'
+import WalletSync from '@/providers/WalletSync'
+import { initialChain, queryClient, wagmiConfig } from '@/lib/wallet-config'
+
+import '@rainbow-me/rainbowkit/styles.css'
 
 // Global stylesheets — match what the Vue project imported in its source.
 // `base.css` defines the design-token CSS variables; `main.css` builds on it.
@@ -35,7 +42,14 @@ createRoot(container).render(
   <StrictMode>
     <BrowserRouter>
       <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/login">
-        <App />
+        <WagmiProvider config={wagmiConfig}>
+          <QueryClientProvider client={queryClient}>
+            <RainbowKitProvider initialChain={initialChain}>
+              <WalletSync />
+              <App />
+            </RainbowKitProvider>
+          </QueryClientProvider>
+        </WagmiProvider>
       </ClerkProvider>
     </BrowserRouter>
   </StrictMode>,

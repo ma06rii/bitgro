@@ -165,8 +165,26 @@ table { border-collapse: collapse; width: 100%; }
   transition: background-color 0.15s;
 }
 .btn-connect:hover { background-color: color-mix(in srgb, var(--color-muted) 50%, transparent); }
+.btn-connect:focus-visible { outline: 2px solid var(--color-foreground); outline-offset: 2px; }
+.btn-connect:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-connect:disabled:hover { background-color: transparent; }
+.btn-connect.is-connected { font-family: var(--font-mono); text-transform: none; letter-spacing: 0; }
+.btn-connect.is-connected .btn-connect-icon { color: var(--color-success); }
 
 .btn-connect-icon { font-size: 1rem; color: var(--color-muted-foreground); }
+
+.btn-connect-error {
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--color-destructive);
+  line-height: 1.4;
+}
+
+/* Spinner keyframe is shared with modal.css; re-declare locally so the .spin
+ * utility works on this view even when no modal stylesheet is loaded. */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 0.8s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .spin { animation: none; } }
 
 .btn-manage {
   font-family: var(--font-headings);
