@@ -259,3 +259,54 @@ table { border-collapse: collapse; width: 100%; }
 
 .check-icon-success { font-size: 0.875rem; color: var(--color-success); flex-shrink: 0; margin-top: 0.125rem; }
 .check-icon-warning { font-size: 0.875rem; color: var(--color-warning); flex-shrink: 0; margin-top: 0.125rem; }
+
+/* === Mezo Passport wallet-picker modal === */
+.wallet-picker-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.wallet-picker-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  font-family: var(--font-headings);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-foreground);
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.wallet-picker-item:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--color-muted) 50%, transparent);
+  border-color: var(--color-accent);
+}
+.wallet-picker-item:disabled { opacity: 0.55; cursor: not-allowed; }
+.wallet-picker-item-icon {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.wallet-picker-item-icon img { width: 28px; height: 28px; border-radius: 6px; }
+.wallet-picker-item-name { flex: 1; text-align: left; }
+.wallet-picker-item-spinner { font-size: 1rem; color: var(--color-muted-foreground); }
+.wallet-picker-error {
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background-color: color-mix(in srgb, var(--color-destructive) 8%, transparent);
+  border-left: 3px solid var(--color-destructive);
+  color: var(--color-destructive);
+  font-size: 0.85rem;
+  border-radius: 6px;
+}
