@@ -1,11 +1,8 @@
 // Mezo Passport / wagmi configuration.
 //
-// Centralizes the wagmi Config, QueryClient, and selected Mezo chain so
-// `main.tsx` only has to wire providers. Reads two Vite env vars:
-//   - VITE_WALLETCONNECT_PROJECT_ID  (required — fail-fast at boot)
-//   - VITE_MEZO_NETWORK              (optional — "testnet" | "mainnet", default "testnet")
+// Imported only from the lazy wallet bundle (see src/providers/WalletProviders.tsx),
+// so pulling in `@mezo-org/passport` from here does not affect the root chunk.
 
-import { QueryClient } from '@tanstack/react-query'
 import { getConfig, mezoMainnet, mezoTestnet } from '@mezo-org/passport'
 
 const walletConnectProjectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID
@@ -24,13 +21,4 @@ export const wagmiConfig = getConfig({
   appName: 'Bitgro',
   walletConnectProjectId,
   mezoNetwork,
-})
-
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: 1,
-    },
-  },
 })

@@ -3,6 +3,7 @@
 import { Icon } from '@iconify/react'
 
 import MezoPassportCard from '@/components/MezoPassportCard'
+import { useMezoWallet } from '@/hooks/useMezoWallet'
 
 import '@/assets/connect_wallet.css'
 
