@@ -169,7 +169,7 @@ export default function ComplianceAuditView() {
                     </td>
                     <td className="audit-td-top">
                       <div className="action-main">
-                        <span>Deploy to Mezo CDP</span>
+                        <span>Deploy to Mezo Earn</span>
                       </div>
                       <div className="action-sub">50.00 BTC</div>
                     </td>
@@ -181,7 +181,7 @@ export default function ComplianceAuditView() {
                             <span>Mandatory Disclosure Signed</span>
                           </div>
                           <div className="risk-sub">
-                            <span>Standard CDP Risk, Smart Contract Exposure</span>
+                            <span>Standard Earn Risk, Smart Contract Exposure</span>
                           </div>
                         </div>
                       </div>
@@ -233,7 +233,7 @@ export default function ComplianceAuditView() {
                     </td>
                   </tr>
 
-                  <tr className="audit-row">
+                  {/* <tr className="audit-row">
                     <td className="audit-td-top">
                       <div className="audit-date-main">Oct 10, 2023 • 11:05</div>
                       <div className="audit-date-id">LOG-9801</div>
@@ -271,7 +271,7 @@ export default function ComplianceAuditView() {
                         <span>Executed</span>
                       </div>
                     </td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>

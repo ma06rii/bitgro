@@ -111,7 +111,7 @@ export default function ActivePositionView() {
                   <tr className="position-row">
                     <td className="pos-td-top">
                       <div className="position-name">
-                        <span>Mezo CDP</span>
+                        <span>Mezo Earn</span>
                       </div>
                       <div className="position-badge">
                         <span>Tier 2</span>
@@ -157,7 +157,7 @@ export default function ActivePositionView() {
                     </td>
                   </tr>
 
-                  <tr className="position-row-warning">
+                  {/* <tr className="position-row-warning">
                     <td className="pos-td-top">
                       <div className="position-name">
                         <span>mRe7BTC Fund</span>
@@ -207,9 +207,9 @@ export default function ActivePositionView() {
                         <Icon icon="lucide:chevron-up" className="entity-chevron" />
                       </button>
                     </td>
-                  </tr>
+                  </tr> */}
 
-                  <tr className="position-history-row">
+                  {/* <tr className="position-history-row">
                     <td colSpan={6} className="pos-td-history">
                       <div className="history-panel">
                         <h4 className="history-title">
@@ -252,9 +252,9 @@ export default function ActivePositionView() {
                         </div>
                       </div>
                     </td>
-                  </tr>
+                  </tr> */}
 
-                  <tr className="position-row">
+                  {/* <tr className="position-row">
                     <td className="pos-td-top">
                       <div className="position-name">
                         <span>Bitcoin Lending – Starknet</span>
@@ -301,7 +301,7 @@ export default function ActivePositionView() {
                         <Icon icon="lucide:chevron-down" className="entity-chevron" />
                       </button>
                     </td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>

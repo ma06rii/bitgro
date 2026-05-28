@@ -156,7 +156,7 @@ export default function ConnectWalletView() {
                     </div>
                   </div>
                   <h3 className="custodian-name">
-                    <span>Dfns</span>
+                    <span>DFNS</span>
                   </h3>
                   <p className="custodian-desc">
                     <span>Programmable keyless wallet infrastructure.</span>

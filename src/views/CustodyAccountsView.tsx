@@ -63,7 +63,7 @@ export default function CustodyAccountsView() {
             <div className="account-card-active">
               <div className="account-card-top">
                 <div>
-                  <h3 className="account-name">Dfns</h3>
+                  <h3 className="account-name">DFNS</h3>
                   <p className="account-type">
                     <span>MPC Programmable</span>
                   </p>

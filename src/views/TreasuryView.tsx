@@ -44,7 +44,7 @@ export default function TreasuryView() {
               </h4>
               <p className="alert-text">
                 <span>
-                  Re7 mRe7BTC Fund is approaching liquidation threshold. Add collateral
+                  Mezo Earn Fund is approaching liquidation threshold. Add collateral
                   immediately to avoid penalty.
                 </span>
               </p>
@@ -207,7 +207,7 @@ export default function TreasuryView() {
                   </tr>
                 </thead>
                 <tbody className="table-body">
-                  <tr className="table-row">
+                  {/* <tr className="table-row">
                     <td className="td-strategy">
                       <span>Bitcoin Lending – Starknet</span>
                     </td>
@@ -223,8 +223,8 @@ export default function TreasuryView() {
                         <span>Manage</span>
                       </button>
                     </td>
-                  </tr>
-                  <tr className="table-row">
+                  </tr> */}
+                  {/* <tr className="table-row">
                     <td className="td-strategy">
                       <span>Re7 mRe7BTC Fund</span>
                     </td>
@@ -240,10 +240,10 @@ export default function TreasuryView() {
                         <span>Manage</span>
                       </button>
                     </td>
-                  </tr>
+                  </tr> */}
                   <tr className="table-row">
                     <td className="td-strategy">
-                      <span>Mezo CDP</span>
+                      <span>Mezo Earn</span>
                     </td>
                     <td className="td-amount">300.25 BTC</td>
                     <td className="td-apy">8.1%</td>

@@ -171,7 +171,7 @@ export default function AccountingSyncView() {
                   </tr>
                 </thead>
                 <tbody className="table-body">
-                  <tr className="table-row">
+                  {/* <tr className="table-row">
                     <td className="td-checkbox">
                       <div className="checkbox-checked">
                         <Icon icon="lucide:check" className="checkbox-icon" />
@@ -200,7 +200,7 @@ export default function AccountingSyncView() {
                         <span>Pending</span>
                       </span>
                     </td>
-                  </tr>
+                  </tr> */}
 
                   <tr className="table-row">
                     <td className="td-checkbox">
@@ -249,7 +249,7 @@ export default function AccountingSyncView() {
                     <td className="td-desc-sm">
                       <p className="td-desc-title-flex">
                         <Icon icon="lucide:chevron-down" className="entity-chevron" />
-                        <span>Mezo CDP Multi-Step Deployment</span>
+                        <span>Mezo Earn Multi-Step Deployment</span>
                       </p>
                     </td>
                     <td className="td-muted-sm">-</td>
@@ -313,7 +313,7 @@ export default function AccountingSyncView() {
                     </td>
                     <td className="td-desc-sm">
                       <p className="td-desc-title">
-                        <span>Deposit Collateral to CDP Vault</span>
+                        <span>Deposit Collateral to Earn Vault</span>
                       </p>
                       <p className="td-desc-sub">
                         <span>Minted Receipt Tokens</span>

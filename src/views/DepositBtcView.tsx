@@ -40,8 +40,7 @@ export default function DepositBtcView() {
                   </h4>
                   <p className="info-bar-desc">
                     <span>
-                      Funds deposited here will be held by a Qualified Custodian in cold storage.
-                      Bankruptcy remote and fully audited.
+                      Funds deposited here will be held by a Qualified Custodian.
                     </span>
                   </p>
                 </div>

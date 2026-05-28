@@ -152,7 +152,7 @@ export default function Tier3ActivationView() {
                         <span>
                           Bitgro acts solely as a treasury management interface. We do not
                           audit, endorse, or guarantee the security of third-party smart contracts
-                          (e.g., Mezo, Starknet, Re7). You accept that hacks or exploits on these
+                          (e.g., Mezo Earn). You accept that hacks or exploits on these
                           external networks may result in irreversible loss.
                         </span>
                       </p>
@@ -163,7 +163,7 @@ export default function Tier3ActivationView() {
                       </h4>
                       <p className="waiver-section-text">
                         <span>
-                          Delegated funds (e.g., mRe7BTC) involve trusting a third-party entity to
+                          Delegated funds involve trusting a third-party entity to
                           execute trading strategies. You acknowledge that malfeasance, bankruptcy,
                           or insolvency of these counterparties may lead to a total loss of
                           deployed assets.

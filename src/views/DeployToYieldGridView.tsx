@@ -34,7 +34,7 @@ export default function DeployToYieldGridView() {
             <span>Available Strategies</span>
           </h2>
           <div className="strategy-grid">
-            <div className="strategy-card">
+            {/* <div className="strategy-card">
               <div className="strategy-card-pad">
                 <div className="strategy-card-header">
                   <div className="strategy-name-group">
@@ -89,9 +89,9 @@ export default function DeployToYieldGridView() {
                   </button>
                 </div>
               </div>
-            </div>
+            </div> */}
 
-            <div className="strategy-card-locked">
+            {/* <div className="strategy-card-locked">
               <div className="strategy-card-pad">
                 <div className="strategy-card-header">
                   <div className="strategy-name-group">
@@ -146,7 +146,7 @@ export default function DeployToYieldGridView() {
                   </button>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="strategy-card">
               <div className="strategy-card-pad">
@@ -156,7 +156,7 @@ export default function DeployToYieldGridView() {
                       <span>Collateralized Debt</span>
                     </h3>
                     <p className="strategy-provider">
-                      <span>Mezo CDP</span>
+                      <span>Mezo Earn</span>
                     </p>
                   </div>
                   <div className="badge-tier2">
@@ -233,7 +233,7 @@ export default function DeployToYieldGridView() {
                   </tr>
                 </thead>
                 <tbody className="positions-tbody">
-                  <tr className="positions-tr">
+                  {/* <tr className="positions-tr">
                     <td className="positions-td">
                       <span>Bitcoin Lending – Starknet</span>
                     </td>
@@ -244,10 +244,10 @@ export default function DeployToYieldGridView() {
                         <span>Healthy</span>
                       </div>
                     </td>
-                  </tr>
+                  </tr> */}
                   <tr className="positions-tr">
                     <td className="positions-td">
-                      <span>Mezo CDP</span>
+                      <span>Mezo Earn</span>
                     </td>
                     <td className="positions-td-right">300.25 BTC</td>
                     <td className="positions-td-success">8.1%</td>
